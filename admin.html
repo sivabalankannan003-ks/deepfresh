@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Deecuts Admin</title>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+body{
+    font-family:Arial;
+    padding:20px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    border:1px solid #ddd;
+    padding:10px;
+    text-align:center;
+}
+
+th{
+    background:#111;
+    color:white;
+}
+
+button{
+    margin:3px;
+    padding:6px 10px;
+    border:none;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>📦 Deecuts Orders Admin</h1>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Phone</th>
+<th>Address</th>
+<th>Items</th>
+<th>Total</th>
+<th>Date</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="ordersTable"></tbody>
+</table>
+
+<script>
+
+async function loadOrders(){
+
+ const res = await fetch("http://localhost:5000/api/orders");
+ const orders = await res.json();
+
+ let html="";
+
+ orders.forEach(order=>{
+
+ html += `
+ <tr id="row-${order._id}">
+   <td>${order.name}</td>
+   <td>${order.phone}</td>
+   <td>
+      ${order.house}<br>
+      ${order.street}<br>
+      ${order.city} - ${order.pin}
+   </td>
+   <td>${order.items}</td>
+   <td>₹${order.total}</td>
+   <td>${order.date}</td>
+
+   <td>
+     <button style="background:green;color:white;"
+       onclick="editOrder('${order._id}')">
+       Edit
+     </button>
+
+     <button style="background:red;color:white;"
+       onclick="deleteOrder('${order._id}')">
+       Delete
+     </button>
+   </td>
+ </tr>
+ `;
+
+ });
+
+ document.getElementById("ordersTable").innerHTML = html;
+}
+
+loadOrders();
+
+
+// 🔥 DELETE
+async function deleteOrder(id){
+
+ const result = await Swal.fire({
+   title: "Are you sure?",
+   text: "This order will be deleted permanently!",
+   icon: "warning",
+   showCancelButton: true,
+   confirmButtonColor: "#d33",
+   confirmButtonText: "Yes, delete it!"
+ });
+
+ if(!result.isConfirmed) return;
+
+ const res = await fetch(`http://localhost:5000/api/orders/${id}`, {
+   method: "DELETE"
+ });
+
+ const data = await res.json();
+
+ if(data.success){
+   document.getElementById("row-" + id).remove();
+   Swal.fire("Deleted!", "Order removed", "success");
+ } else {
+   Swal.fire("Error", "Delete failed", "error");
+ }
+}
+
+
+// 🔥 EDIT
+async function editOrder(id){
+
+ const result = await Swal.fire({
+   title: "Edit Order",
+   html:
+     '<input id="name" class="swal2-input" placeholder="Name">' +
+     '<input id="phone" class="swal2-input" placeholder="Phone">' +
+     '<input id="city" class="swal2-input" placeholder="City">',
+   showCancelButton: true,
+   confirmButtonText: "Update",
+   preConfirm: () => {
+     return {
+       name: document.getElementById('name').value,
+       phone: document.getElementById('phone').value,
+       city: document.getElementById('city').value
+     }
+   }
+ });
+
+ if(!result.isConfirmed) return;
+
+ const res = await fetch(`http://localhost:5000/api/orders/${id}`, {
+   method: "PUT",
+   headers: { "Content-Type": "application/json" },
+   body: JSON.stringify(result.value)
+ });
+
+ const data = await res.json();
+
+ if(data.success){
+   Swal.fire("Updated!", "Order updated successfully", "success");
+   loadOrders();
+ } else {
+   Swal.fire("Error", "Update failed", "error");
+ }
+}
+
+</script>
+
+</body>
+</html>

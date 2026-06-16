@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Sign In — DEECUTS Fresh Chicken</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,600&family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Reset & Tokens ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --purple:       #9b6ddb;
+      --purple2:      #461877;
+      --purple-light: #EEE5FF;
+      --purple-pale:  #F7F3FF;
+      --dark:         #0F0B15;
+      --text:         #1A1225;
+      --muted:        #6B6478;
+      --border:       #E8E0F0;
+      --green:        #2ECC71;
+      --red:          #E53E3E;
+      --gold:         #F5C842;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--dark);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Decorative blobs */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -120px; right: -120px;
+      width: 450px; height: 450px;
+      background: radial-gradient(circle, rgba(155,109,219,.35) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -100px; left: -100px;
+      width: 380px; height: 380px;
+      background: radial-gradient(circle, rgba(70,24,119,.4) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ── Card ── */
+    .auth-card {
+      background: #fff;
+      border-radius: 24px;
+      padding: clamp(28px, 6vw, 44px);
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 32px 80px rgba(0,0,0,.45);
+      position: relative;
+      z-index: 1;
+      animation: slideUp .4s ease;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Brand ── */
+    .auth-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .auth-brand-icon {
+      width: 40px; height: 40px;
+      background: var(--purple);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+    }
+    .auth-brand-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--purple);
+      line-height: 1.1;
+    }
+    .auth-brand-name small {
+      display: block;
+      font-size: 8px;
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* ── Headings ── */
+    .auth-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(22px, 4vw, 28px);
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .auth-title em { color: var(--purple); font-style: normal; }
+    .auth-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 26px;
+    }
+
+    /* ── Form ── */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-bottom: 14px;
+    }
+    .form-group label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .7px;
+    }
+    .input-wrap {
+      position: relative;
+    }
+    .input-wrap .input-icon {
+      position: absolute;
+      left: 12px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      pointer-events: none;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 12px 12px 12px 38px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+      background: #fff;
+    }
+    .form-group input:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(155,109,219,.12);
+    }
+    .form-group input.error  { border-color: var(--red); }
+    .form-group input.valid  { border-color: var(--green); }
+    .field-error {
+      font-size: 11px;
+      color: var(--red);
+      margin-top: 3px;
+      display: none;
+    }
+    .field-error.show { display: block; }
+
+    /* Forgot password link */
+    .forgot-link {
+      text-align: right;
+      margin-top: -8px;
+      margin-bottom: 12px;
+    }
+    .forgot-link a {
+      font-size: 12px;
+      color: var(--purple);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .forgot-link a:hover { text-decoration: underline; }
+
+    /* ── Submit button ── */
+    .btn-auth {
+      width: 100%;
+      padding: 14px;
+      background: var(--purple);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: 'Syne', sans-serif;
+      cursor: pointer;
+      transition: .2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .btn-auth:hover:not(:disabled) {
+      background: var(--purple2);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(91,45,142,.38);
+    }
+    .btn-auth:disabled { opacity: .65; cursor: not-allowed; transform: none; }
+
+    /* ── Divider ── */
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 18px 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .auth-divider::before,
+    .auth-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Google button ── */
+    .btn-google {
+      width: 100%;
+      padding: 13px;
+      background: #fff;
+      color: var(--text);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: .2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn-google:hover {
+      border-color: var(--purple);
+      background: var(--purple-pale);
+    }
+    .google-icon {
+      width: 18px; height: 18px;
+    }
+
+    /* ── Footer link ── */
+    .auth-footer {
+      text-align: center;
+      margin-top: 22px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .auth-footer a {
+      color: var(--purple);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .auth-footer a:hover { text-decoration: underline; }
+
+    /* ── Alert banner ── */
+    .auth-alert {
+      padding: 11px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 14px;
+      display: none;
+    }
+    .auth-alert.show   { display: block; }
+    .auth-alert.error  { background: #fef2f2; color: #c53030; border: 1px solid #fed7d7; }
+    .auth-alert.success{ background: #f0fff4; color: #276749; border: 1px solid #c6f6d5; }
+
+    /* ── Back link ── */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      margin-bottom: 20px;
+      transition: color .2s;
+    }
+    .back-link:hover { color: var(--purple); }
+
+    /* ── Password toggle ── */
+    .pw-toggle {
+      position: absolute;
+      right: 12px; top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      color: var(--muted);
+      padding: 0;
+      line-height: 1;
+    }
+
+    /* ── Spinner ── */
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .6s linear infinite;
+      display: none;
+    }
+    .spinner.show { display: block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Trust badges ── */
+    .trust-row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+    .trust-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      font-size: 10px;
+      color: var(--muted);
+      text-align: center;
+    }
+    .trust-badge span { font-size: 20px; }
+
+    /* ── Forgot password panel ── */
+    #forgot-panel { display: none; }
+
+  </style>
+</head>
+<body>
+
+  <div class="auth-card">
+
+    <!-- Brand -->
+    <a href="index.html" class="back-link">← Back to Store</a>
+    <div class="auth-brand">
+      <div class="auth-brand-icon">🍗</div>
+      <div class="auth-brand-name">DEECUTS<small>Farm Fresh Poultry</small></div>
+    </div>
+
+    <!-- ══ LOGIN PANEL ══ -->
+    <div id="login-panel">
+      <div class="auth-title">Welcome <em>Back</em></div>
+      <div class="auth-sub">Sign in to your Deecuts account to continue</div>
+
+      <!-- Alert banner -->
+      <div class="auth-alert" id="login-alert"></div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label>Email Address</label>
+        <div class="input-wrap">
+          <span class="input-icon">✉️</span>
+          <input type="email" id="login-email" placeholder="you@email.com" autocomplete="email">
+        </div>
+        <div class="field-error" id="login-email-err">Please enter a valid email.</div>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label>Password</label>
+        <div class="input-wrap">
+          <span class="input-icon">🔒</span>
+          <input type="password" id="login-pw" placeholder="Your password" autocomplete="current-password">
+          <button class="pw-toggle" type="button" onclick="togglePw('login-pw', this)" title="Show/hide password">👁</button>
+        </div>
+        <div class="field-error" id="login-pw-err">Password required.</div>
+      </div>
+
+      <div class="forgot-link">
+        <a href="#" onclick="showForgot(); return false;">Forgot password?</a>
+      </div>
+
+      <!-- Login button -->
+      <button class="btn-auth" id="login-btn" onclick="loginWithEmail()">
+        <span id="login-btn-text">Sign In →</span>
+        <div class="spinner" id="login-spinner"></div>
+      </button>
+
+      <!-- Divider -->
+      <div class="auth-divider">or continue with</div>
+
+      <!-- Google -->
+      <button class="btn-google" id="google-btn" onclick="loginWithGoogle()">
+        <svg class="google-icon" viewBox="0 0 48 48">
+          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+          <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+          <path fill="none" d="M0 0h48v48H0z"/>
+        </svg>
+        Continue with Google
+      </button>
+
+      <div class="auth-footer">
+        Don't have an account? <a href="signup.html">Create one →</a>
+      </div>
+    </div>
+
+    <!-- ══ FORGOT PASSWORD PANEL ══ -->
+    <div id="forgot-panel">
+      <div class="auth-title">Reset <em>Password</em></div>
+      <div class="auth-sub">Enter your email and we'll send a reset link</div>
+
+      <div class="auth-alert" id="forgot-alert"></div>
+
+      <div class="form-group">
+        <label>Email Address</label>
+        <div class="input-wrap">
+          <span class="input-icon">✉️</span>
+          <input type="email" id="forgot-email" placeholder="you@email.com" autocomplete="email">
+        </div>
+        <div class="field-error" id="forgot-email-err">Please enter a valid email.</div>
+      </div>
+
+      <button class="btn-auth" id="forgot-btn" onclick="sendPasswordReset()">
+        <span id="forgot-btn-text">Send Reset Link →</span>
+        <div class="spinner" id="forgot-spinner"></div>
+      </button>
+
+      <div class="auth-footer" style="margin-top:14px">
+        <a href="#" onclick="showLogin(); return false;">← Back to Sign In</a>
+      </div>
+    </div>
+
+    <!-- Trust badges -->
+    <div class="trust-row">
+      <div class="trust-badge"><span>🔒</span>SSL Secure</div>
+      <div class="trust-badge"><span>🌿</span>Farm Fresh</div>
+      <div class="trust-badge"><span>🚚</span>Fast Delivery</div>
+    </div>
+
+  </div>
+
+  <!-- Firebase v8 compat CDN -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+  <script>
+    /* ════════════════════════════════════════
+       DEECUTS  |  login.html  —  Inline Script
+    ════════════════════════════════════════ */
+
+    // ── Firebase config (must match app.js) ──
+   const firebaseConfig = {
+  apiKey: "AIzaSyAQTwmcPDy73S_qqYEJe3eUoUyiefDRs0A",
+  authDomain: "devaro-fresh-chicken.firebaseapp.com",
+  databaseURL: "https://devaro-fresh-chicken-default-rtdb.firebaseio.com",
+  projectId: "devaro-fresh-chicken",
+  storageBucket: "devaro-fresh-chicken.firebasestorage.app",
+  messagingSenderId: "1009194311324",
+  appId: "1:1009194311324:web:de48f064b87ab583375759",
+  measurementId: "G-5FVZQ712V2"
+};
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const googleProvider = new firebase.auth.GoogleAuthProvider();
+    googleProvider.setCustomParameters({ prompt: "select_account" });
+
+    // ── If already signed in, redirect to homepage ──
+    auth.onAuthStateChanged(function (user) {
+      if (user) {
+        const dest = sessionStorage.getItem("deecuts_redirect") || "index.html";
+        sessionStorage.removeItem("deecuts_redirect");
+        window.location.href = dest === "checkout" ? "index.html#checkout" : dest;
+      }
+    });
+
+    /* ── Panel Switchers ── */
+    function showForgot() {
+      document.getElementById("login-panel").style.display  = "none";
+      document.getElementById("forgot-panel").style.display = "block";
+    }
+    function showLogin() {
+      document.getElementById("forgot-panel").style.display = "none";
+      document.getElementById("login-panel").style.display  = "block";
+    }
+
+    /* ── Password Visibility Toggle ── */
+    function togglePw(inputId, btn) {
+      const inp = document.getElementById(inputId);
+      if (inp.type === "password") { inp.type = "text";     btn.textContent = "🙈"; }
+      else                         { inp.type = "password"; btn.textContent = "👁"; }
+    }
+
+    /* ── Alert helper ── */
+    function showAlert(id, msg, type) {
+      const el = document.getElementById(id);
+      el.textContent  = msg;
+      el.className    = `auth-alert ${type} show`;
+    }
+    function hideAlert(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove("show");
+    }
+
+    /* ── Loading state ── */
+    function setLoading(btnId, spinnerId, textId, loading, label) {
+      const btn  = document.getElementById(btnId);
+      const spin = document.getElementById(spinnerId);
+      const txt  = document.getElementById(textId);
+      btn.disabled       = loading;
+      spin.classList.toggle("show", loading);
+      if (!loading && label) txt.textContent = label;
+    }
+
+    /* ── Friendly Firebase error messages ── */
+    function friendlyError(code) {
+      const map = {
+        "auth/user-not-found":         "No account found with this email.",
+        "auth/wrong-password":         "Incorrect password. Please try again.",
+        "auth/invalid-email":          "Please enter a valid email address.",
+        "auth/too-many-requests":      "Too many attempts. Please wait a moment.",
+        "auth/network-request-failed": "Network error. Check your connection.",
+        "auth/user-disabled":          "This account has been disabled.",
+        "auth/invalid-credential":     "Invalid email or password.",
+        "auth/popup-closed-by-user":   "Google sign-in was cancelled.",
+        "auth/popup-blocked":          "Pop-up was blocked. Allow pop-ups for this site.",
+      };
+      return map[code] || "An error occurred. Please try again.";
+    }
+
+    /* ── Validation ── */
+    function validateEmail(val, errId) {
+      const el  = document.getElementById(errId);
+      const ok  = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+      el.classList.toggle("show", !ok);
+      return ok;
+    }
+    function validateRequired(val, errId) {
+      const el = document.getElementById(errId);
+      const ok = val.trim().length > 0;
+      el.classList.toggle("show", !ok);
+      return ok;
+    }
+
+    /* ════════════ EMAIL LOGIN ════════════ */
+    function loginWithEmail() {
+      hideAlert("login-alert");
+      const email = document.getElementById("login-email").value.trim();
+      const pw    = document.getElementById("login-pw").value;
+
+      const emailOk = validateEmail(email, "login-email-err");
+      const pwOk    = validateRequired(pw, "login-pw-err");
+      if (!emailOk || !pwOk) return;
+
+      setLoading("login-btn", "login-spinner", "login-btn-text", true);
+
+      auth.signInWithEmailAndPassword(email, pw)
+        .then(function (cred) {
+          // onAuthStateChanged will handle redirect
+          console.log("✅ Login success:", cred.user.email);
+        })
+        .catch(function (error) {
+          console.error("Login error:", error.code);
+          setLoading("login-btn", "login-spinner", "login-btn-text", false, "Sign In →");
+          showAlert("login-alert", friendlyError(error.code), "error");
+        });
+    }
+
+    /* ════════════ GOOGLE LOGIN ════════════ */
+    function loginWithGoogle() {
+      hideAlert("login-alert");
+      const btn = document.getElementById("google-btn");
+      btn.disabled = true;
+      btn.textContent = "Connecting…";
+
+      auth.signInWithPopup(googleProvider)
+        .then(function (result) {
+          console.log("✅ Google sign-in:", result.user.displayName);
+          // onAuthStateChanged handles redirect
+        })
+        .catch(function (error) {
+          console.error("Google sign-in error:", error.code);
+          btn.disabled = false;
+          btn.innerHTML = `
+            <svg class="google-icon" viewBox="0 0 48 48">
+              <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+              <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+              <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+              <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+            </svg>
+            Continue with Google`;
+          showAlert("login-alert", friendlyError(error.code), "error");
+        });
+    }
+
+    /* ════════════ FORGOT PASSWORD ════════════ */
+    function sendPasswordReset() {
+      hideAlert("forgot-alert");
+      const email = document.getElementById("forgot-email").value.trim();
+      if (!validateEmail(email, "forgot-email-err")) return;
+
+      setLoading("forgot-btn", "forgot-spinner", "forgot-btn-text", true);
+
+      auth.sendPasswordResetEmail(email)
+        .then(function () {
+          setLoading("forgot-btn", "forgot-spinner", "forgot-btn-text", false, "Send Reset Link →");
+          showAlert("forgot-alert",
+            "✅ Reset link sent! Check your inbox (and spam folder).",
+            "success");
+          document.getElementById("forgot-email").value = "";
+        })
+        .catch(function (error) {
+          setLoading("forgot-btn", "forgot-spinner", "forgot-btn-text", false, "Send Reset Link →");
+          showAlert("forgot-alert", friendlyError(error.code), "error");
+        });
+    }
+
+    /* ── Allow Enter key to submit ── */
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "Enter") return;
+      const fp = document.getElementById("forgot-panel");
+      if (fp && fp.style.display === "block") sendPasswordReset();
+      else loginWithEmail();
+    });
+
+    /* ── Expose to window ── */
+    window.loginWithEmail     = loginWithEmail;
+    window.loginWithGoogle    = loginWithGoogle;
+    window.sendPasswordReset  = sendPasswordReset;
+    window.showForgot         = showForgot;
+    window.showLogin          = showLogin;
+    window.togglePw           = togglePw;
+  </script>
+</body>
+</html>

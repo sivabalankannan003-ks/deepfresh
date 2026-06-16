@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>DEECUTS — Farm Fresh Chicken</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<meta name="description" content="Fresh Chicken Sales & Supply Services - Farm Fresh, Hygienic, Fast Delivery, Premium Quality Chicken Supply for Hotels, Restaurants, and Homes.">
+<meta name="keywords" content="fresh chicken, chicken supply, wholesale chicken, poultry, farm fresh chicken, chicken delivery">
+<title>Fresh Chicken – Sales & Supply Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<!-- FONT AWESOME -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+<!-- ═══ TOP NAV ═══ -->
+<nav class="top-nav" id="top-nav">
+
+  <nav class="navbar">
+
+<div class="logos">
+<img src="logo.png.jpeg" alt="Deecuts Logo">
+</div>
+</nav>
+
+
+  <div class="logo" onclick="showPage('home')">DEECUTS<small>Farm Fresh Poultry</small></div>
+  <ul class="nav-links">
+   <!-- <li><a id="nl-home" class="active" onclick="showPage('home')">Home</a></li>
+    <li><a id="nl-shop" onclick="showPage('shop')">Shop</a></li>-->
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="why.html">Why Deecuts</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+
+
+<style>
+/* ════════ CONTACT SECTION ════════ */
+#contact{
+  padding:clamp(40px,6vw,70px) 5%;
+  background:linear-gradient(135deg,#0F0B15 0%,#2D1456 60%,#5B2D8E 100%);
+  position:relative;
+  overflow:hidden;
+}
+
+#contact::after{
+  content:'';
+  position:absolute;
+  right:-80px;
+  bottom:-80px;
+  width:280px;
+  height:280px;
+  border-radius:50%;
+  background:rgba(255,255,255,.05);
+  pointer-events:none;
+}
+
+#contact .container{
+  position:relative;
+  z-index:1;
+}
+
+.text-center{
+  text-align:center;
+  margin-bottom:40px;
+}
+
+.section-tag{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:8px;
+}
+
+.section-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(28px,5vw,42px);
+  color:#fff;
+  font-weight:800;
+}
+
+.section-title .accent{
+  color:var(--gold);
+}
+
+.contact-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+  align-items:stretch;
+}
+
+.contact-card{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(12px);
+  border-radius:20px;
+  padding:24px;
+}
+
+.contact-info-list{
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.contact-info-list li{
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  padding:14px;
+  border-radius:14px;
+  background:rgba(255,255,255,.04);
+  transition:.25s;
+}
+
+.contact-info-list li:hover{
+  background:rgba(255,255,255,.08);
+  transform:translateY(-2px);
+}
+
+.ci-icon{
+  width:48px;
+  height:48px;
+  background:rgba(245,200,66,.12);
+  border:1px solid rgba(245,200,66,.25);
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  flex-shrink:0;
+  color:var(--gold);
+}
+
+.ci-label{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.45);
+  margin-bottom:4px;
+}
+
+.ci-val{
+  font-size:14px;
+  line-height:1.7;
+  color:#fff;
+  font-weight:500;
+}
+
+.social-icons{
+  display:flex;
+  gap:10px;
+  margin-top:22px;
+}
+
+.social-icon{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  font-size:18px;
+  transition:.25s;
+}
+
+.social-icon:hover{
+  background:var(--purple);
+  border-color:var(--purple);
+  transform:translateY(-2px);
+}
+
+.map-embed{
+  overflow:hidden;
+  border-radius:20px;
+  height:100%;
+  min-height:420px;
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.map-embed iframe{
+  width:100%;
+  height:100%;
+  border:none;
+  filter:grayscale(.15) contrast(1.05);
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+  .contact-grid{
+    grid-template-columns:1fr;
+  }
+
+  .contact-card{
+    padding:18px;
+  }
+
+  .contact-info-list li{
+    padding:12px;
+  }
+
+  .ci-icon{
+    width:42px;
+    height:42px;
+    font-size:18px;
+  }
+
+  .ci-val{
+    font-size:13px;
+  }
+
+  .map-embed{
+    min-height:300px;
+  }
+}
+</style>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+
+    <div class="text-center">
+      <div class="section-tag">Get in Touch</div>
+      <h2 class="section-title">
+        Contact <span class="accent">Us</span>
+      </h2>
+    </div>
+
+    <div class="contact-grid">
+
+      <!-- LEFT -->
+      <div class="contact-card">
+
+        <ul class="contact-info-list">
+
+          <li>
+            <div class="ci-icon">
+              <i class="fas fa-phone"></i>
+            </div>
+
+            <div>
+              <div class="ci-label">Phone</div>
+              <div class="ci-val">+91 99999 99999</div>
+            </div>
+          </li>
+
+          <li>
+            <div class="ci-icon">
+              <i class="fab fa-whatsapp"></i>
+            </div>
+
+            <div>
+              <div class="ci-label">WhatsApp</div>
+              <div class="ci-val">+91 99999 99999</div>
+            </div>
+          </li>
+
+          <li>
+            <div class="ci-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+
+            <div>
+              <div class="ci-label">Email</div>
+              <div class="ci-val">freshchicken@email.com</div>
+            </div>
+          </li>
+
+          <li>
+            <div class="ci-icon">
+              <i class="fas fa-location-dot"></i>
+            </div>
+
+            <div>
+              <div class="ci-label">Address</div>
+              <div class="ci-val">
+                Fresh Chicken Stall, Main Market Road,
+                Tiruchirappalli, Tamil Nadu
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <div class="ci-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+
+            <div>
+              <div class="ci-label">Working Hours</div>
+              <div class="ci-val">6:00 AM – 9:00 PM (Daily)</div>
+            </div>
+          </li>
+
+        </ul>
+
+        <!-- SOCIAL -->
+        <div class="social-icons">
+
+          <a href="#" class="social-icon">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+
+          <a href="#" class="social-icon">
+            <i class="fab fa-instagram"></i>
+          </a>
+
+          <a href="#" class="social-icon">
+            <i class="fab fa-youtube"></i>
+          </a>
+
+          <a href="https://wa.me/919999999999" class="social-icon">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+
+        </div>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div class="map-embed">
+
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125321.5!2d78.6677!3d10.7905!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3baaf50ff3b36f1b%3A0xe84be9a9c2098aa2!2sTiruchirappalli%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+<script src="app.js"></script>
+</html>

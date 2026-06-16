@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>DEECUTS — Farm Fresh Chicken</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<meta name="description" content="Fresh Chicken Sales & Supply Services - Farm Fresh, Hygienic, Fast Delivery, Premium Quality Chicken Supply for Hotels, Restaurants, and Homes.">
+<meta name="keywords" content="fresh chicken, chicken supply, wholesale chicken, poultry, farm fresh chicken, chicken delivery">
+<title>Fresh Chicken – Sales & Supply Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+
+
+<!-- FONT AWESOME -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+/* ═════════ ABOUT SECTION ═════════ */
+
+#about{
+  padding:clamp(50px,7vw,90px) 5%;
+  background:linear-gradient(
+    135deg,
+    #0F0B15 0%,
+    #2D1456 60%,
+    #5B2D8E 100%
+  );
+  position:relative;
+  overflow:hidden;
+}
+
+#about::before{
+  content:'';
+  position:absolute;
+  top:-100px;
+  left:-100px;
+  width:260px;
+  height:260px;
+  border-radius:50%;
+  background:rgba(255,255,255,.05);
+  pointer-events:none;
+}
+
+#about::after{
+  content:'';
+  position:absolute;
+  right:-90px;
+  bottom:-90px;
+  width:300px;
+  height:300px;
+  border-radius:50%;
+  background:rgba(255,255,255,.04);
+  pointer-events:none;
+}
+
+#about .container{
+  position:relative;
+  z-index:1;
+}
+
+/* GRID */
+
+.about-grid{
+  display:grid;
+  grid-template-columns:1.1fr 1fr;
+  gap:40px;
+  align-items:center;
+}
+
+/* TEXT */
+
+.section-tag{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:10px;
+}
+
+.section-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(30px,5vw,46px);
+  color:#fff;
+  font-weight:800;
+  line-height:1.3;
+  margin-bottom:18px;
+}
+
+.section-title .accent{
+  color:var(--gold);
+}
+
+.about-text p{
+  font-size:14px;
+  line-height:1.9;
+  color:rgba(255,255,255,.72);
+  margin-bottom:18px;
+}
+
+/* LIST */
+
+.about-list{
+  list-style:none;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:25px;
+}
+
+.about-list li{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  font-size:14px;
+  line-height:1.7;
+  color:#fff;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  padding:14px;
+  border-radius:16px;
+  transition:.3s ease;
+}
+
+.about-list li:hover{
+  transform:translateY(-4px);
+  background:rgba(255,255,255,.08);
+  border-color:rgba(245,200,66,.18);
+}
+
+.about-list i{
+  color:var(--gold);
+  font-size:16px;
+  margin-top:2px;
+}
+
+/* IMAGES */
+
+.about-imgs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+
+.about-img-card{
+  overflow:hidden;
+  border-radius:24px;
+  position:relative;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(10px);
+}
+
+.about-img-card:nth-child(1){
+  grid-column:span 2;
+  height:320px;
+}
+
+.about-img-card:nth-child(2),
+.about-img-card:nth-child(3){
+  height:220px;
+}
+
+.about-img-card img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform .5s ease;
+}
+
+.about-img-card:hover img{
+  transform:scale(1.08);
+}
+
+/* REVEAL */
+
+.reveal{
+  opacity:0;
+  transform:translateY(30px);
+  transition:all .8s ease;
+}
+
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+
+/* DIVIDER */
+
+.divider{
+  width:100%;
+  height:1px;
+  background:linear-gradient(
+    to right,
+    transparent,
+    rgba(255,255,255,.15),
+    transparent
+  );
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+  .about-grid{
+    grid-template-columns:1fr;
+  }
+
+  .about-imgs{
+    margin-top:10px;
+  }
+
+  .about-img-card:nth-child(1){
+    height:260px;
+  }
+
+  .about-img-card:nth-child(2),
+  .about-img-card:nth-child(3){
+    height:180px;
+  }
+}
+
+@media(max-width:768px){
+
+  #about{
+    padding:60px 5%;
+  }
+
+  .section-title{
+    font-size:32px;
+  }
+
+  .about-text p{
+    font-size:13px;
+    line-height:1.8;
+  }
+
+  .about-list{
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+
+  .about-list li{
+    font-size:13px;
+    padding:12px;
+  }
+
+  .about-imgs{
+    grid-template-columns:1fr;
+  }
+
+  .about-img-card:nth-child(1),
+  .about-img-card:nth-child(2),
+  .about-img-card:nth-child(3){
+    grid-column:span 1;
+    height:220px;
+  }
+}
+</style>
+
+
+<!-- ═══ TOP NAV ═══ -->
+<nav class="top-nav" id="top-nav">
+
+  <nav class="navbar">
+
+<div class="logos">
+<img src="logo.png.jpeg" alt="Deecuts Logo">
+</div>
+</nav>
+
+
+   <div class="logo" onclick="showPage('home')">DEECUTS<small>Farm Fresh Poultry</small></div>
+  <ul class="nav-links">
+   <!-- <li><a id="nl-home" class="active" onclick="showPage('home')">Home</a></li>
+    <li><a id="nl-shop" onclick="showPage('shop')">Shop</a></li>-->
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="why.html">Why Deecuts</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ABOUT -->
+<section id="about">
+
+  <div class="container">
+
+    <div class="about-grid">
+
+      <!-- LEFT -->
+      <div class="about-text reveal">
+
+        <div class="section-tag">
+          Who We Are
+        </div>
+
+        <h2 class="section-title">
+          Your Trusted Source for
+          <span class="accent">Farm Fresh</span>
+          Chicken
+        </h2>
+
+        <p>
+          We are a premium poultry supply company delivering farm-fresh,
+          hygienically processed chicken to homes, hotels, restaurants,
+          and retail shops across the region.
+        </p>
+
+        <p>
+          Every bird is carefully sourced from trusted farms,
+          processed under strict hygiene standards,
+          and delivered fresh — never frozen — to your doorstep.
+        </p>
+
+        <ul class="about-list">
+
+          <li>
+            <i class="fas fa-check-circle"></i>
+            Daily fresh stock from certified farms
+          </li>
+
+          <li>
+            <i class="fas fa-check-circle"></i>
+            Wholesale &amp; retail supply available
+          </li>
+
+          <li>
+            <i class="fas fa-check-circle"></i>
+            Hotel, restaurant &amp; home delivery
+          </li>
+
+          <li>
+            <i class="fas fa-check-circle"></i>
+            Hygienically cut, packed &amp; delivered
+          </li>
+
+          <li>
+            <i class="fas fa-check-circle"></i>
+            Competitive bulk pricing
+          </li>
+
+          <li>
+            <i class="fas fa-check-circle"></i>
+            Trusted by 1000+ happy customers
+          </li>
+
+        </ul>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div class="about-imgs reveal">
+
+        <div class="about-img-card">
+          <img src="https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=1200&q=80" alt="Fresh Chicken Farm">
+        </div>
+
+        <div class="about-img-card">
+          <img src="https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=800&q=80" alt="Fresh Chicken">
+        </div>
+
+        <div class="about-img-card">
+          <img src="https://images.unsplash.com/photo-1529042410759-befb1204b468?w=800&q=80" alt="Delivery">
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- DIVIDER -->
+<div class="divider"></div>
+<script src="app.js"></script>
+
+
+<!-- JS -->
+<script>
+/* ═════════ REVEAL ANIMATION ═════════ */
+
+const reveals = document.querySelectorAll('.reveal');
+
+function revealOnScroll(){
+
+  reveals.forEach((item) => {
+
+    const windowHeight = window.innerHeight;
+    const revealTop = item.getBoundingClientRect().top;
+    const revealPoint = 100;
+
+    if(revealTop < windowHeight - revealPoint){
+      item.classList.add('visible');
+    }
+
+  });
+
+}
+
+window.addEventListener('scroll', revealOnScroll);
+
+/* FIRST LOAD */
+revealOnScroll();
+</script>

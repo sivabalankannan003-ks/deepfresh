@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Why Choose Us Section</title>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>DEECUTS — Farm Fresh Chicken</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<meta name="description" content="Fresh Chicken Sales & Supply Services - Farm Fresh, Hygienic, Fast Delivery, Premium Quality Chicken Supply for Hotels, Restaurants, and Homes.">
+<meta name="keywords" content="fresh chicken, chicken supply, wholesale chicken, poultry, farm fresh chicken, chicken delivery">
+<title>Fresh Chicken – Sales & Supply Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<!-- GOOGLE FONTS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<!-- FONT AWESOME -->
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- ═══ TOP NAV ═══ -->
+<nav class="top-nav" id="top-nav">
+
+  <nav class="navbar">
+
+<div class="logos">
+<img src="logo.png.jpeg" alt="Deecuts Logo">
+</div>
+</nav>
+
+
+  <div class="logo" onclick="showPage('home')">DEECUTS<small>Farm Fresh Poultry</small></div>
+  <ul class="nav-links">
+   <!-- <li><a id="nl-home" class="active" onclick="showPage('home')">Home</a></li>
+    <li><a id="nl-shop" onclick="showPage('shop')">Shop</a></li>-->
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="why.html">Why Deecuts</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<style>
+
+/* ═════════ ROOT ═════════ */
+
+:root{
+  --gold:#F5C842;
+  --white:#ffffff;
+  --red:#C0392B;
+  --red-bright:#E74C3C;
+  --purple:#7B3FE4;
+  --font-display:'Playfair Display',serif;
+  --font-body:'DM Sans',sans-serif;
+}
+
+/* ═════════ RESET ═════════ */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  background:#0d0d0d;
+  font-family:var(--font-body);
+  overflow-x:hidden;
+}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+}
+
+/* ═════════ WHY CHOOSE US SECTION ═════════ */
+
+#why{
+  padding:clamp(50px,7vw,90px) 5%;
+  background:linear-gradient(
+    135deg,
+    #0F0B15 0%,
+    #2D1456 60%,
+    #5B2D8E 100%
+  );
+  position:relative;
+  overflow:hidden;
+}
+
+#why::before{
+  content:'';
+  position:absolute;
+  top:-100px;
+  left:-100px;
+  width:260px;
+  height:260px;
+  border-radius:50%;
+  background:rgba(255,255,255,.05);
+  pointer-events:none;
+}
+
+#why::after{
+  content:'';
+  position:absolute;
+  right:-90px;
+  bottom:-90px;
+  width:300px;
+  height:300px;
+  border-radius:50%;
+  background:rgba(255,255,255,.04);
+  pointer-events:none;
+}
+
+#why .container{
+  position:relative;
+  z-index:1;
+}
+
+/* HEADER */
+
+#why .text-center{
+  text-align:center;
+  margin-bottom:42px;
+}
+
+#why .section-tag{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:8px;
+}
+
+#why .section-title{
+  font-family:var(--font-display);
+  font-size:clamp(30px,5vw,46px);
+  color:#fff;
+  font-weight:800;
+  margin-bottom:12px;
+}
+
+#why .section-title .accent{
+  color:var(--gold);
+}
+
+#why .section-sub{
+  max-width:600px;
+  margin:auto;
+  font-size:14px;
+  line-height:1.8;
+  color:rgba(255,255,255,.68);
+}
+
+/* GRID */
+
+.why-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:24px;
+}
+
+/* CARD */
+
+.why-card{
+  position:relative;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(12px);
+  border-radius:22px;
+  padding:28px 24px;
+  overflow:hidden;
+  transition:.3s ease;
+}
+
+.why-card::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    135deg,
+    rgba(245,200,66,.08),
+    transparent 50%
+  );
+  opacity:0;
+  transition:.3s ease;
+}
+
+.why-card:hover{
+  transform:translateY(-6px);
+  background:rgba(255,255,255,.08);
+  border-color:rgba(245,200,66,.2);
+  box-shadow:
+    0 18px 40px rgba(0,0,0,.28),
+    0 0 25px rgba(245,200,66,.08);
+}
+
+.why-card:hover::before{
+  opacity:1;
+}
+
+/* ICON */
+
+.why-icon{
+  width:60px;
+  height:60px;
+  border-radius:18px;
+  background:rgba(245,200,66,.12);
+  border:1px solid rgba(245,200,66,.25);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  color:var(--gold);
+  margin-bottom:18px;
+  transition:.3s ease;
+}
+
+.why-card:hover .why-icon{
+  background:var(--gold);
+  color:#111;
+  transform:translateY(-2px);
+}
+
+/* TEXT */
+
+.why-text h3{
+  font-size:20px;
+  font-weight:700;
+  color:#fff;
+  margin-bottom:10px;
+  line-height:1.4;
+}
+
+.why-text p{
+  font-size:14px;
+  line-height:1.8;
+  color:rgba(255,255,255,.68);
+}
+
+/* REVEAL */
+
+.reveal{
+  opacity:0;
+  transform:translateY(30px);
+  transition:all .8s ease;
+}
+
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+
+/* DIVIDER */
+
+.divider{
+  height:1px;
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,.12),
+    transparent
+  );
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+  #why{
+    padding:60px 5%;
+  }
+
+  .why-grid{
+    gap:18px;
+  }
+
+  .why-card{
+    padding:22px 20px;
+    border-radius:20px;
+  }
+
+  .why-icon{
+    width:52px;
+    height:52px;
+    font-size:20px;
+    border-radius:15px;
+    margin-bottom:15px;
+  }
+
+  .why-text h3{
+    font-size:18px;
+  }
+
+  .why-text p{
+    font-size:13px;
+    line-height:1.7;
+  }
+
+  #why .section-sub{
+    font-size:13px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- WHY CHOOSE US -->
+<section id="why">
+
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="text-center reveal">
+
+      <div class="section-tag">
+        Why We're Different
+      </div>
+
+      <h2 class="section-title">
+        Why Choose <span class="accent">Us?</span>
+      </h2>
+
+      <p class="section-sub">
+        We're not just a supplier — we're your trusted partner in freshness, hygiene, and premium chicken delivery.
+      </p>
+
+    </div>
+
+    <!-- GRID -->
+    <div class="why-grid">
+
+      <!-- CARD -->
+      <div class="why-card reveal">
+
+        <div class="why-icon">
+          <i class="fas fa-leaf"></i>
+        </div>
+
+        <div class="why-text">
+          <h3>Farm Fresh Quality</h3>
+
+          <p>
+            Sourced directly from trusted farms ensuring fresh, healthy, and antibiotic-free chicken every day.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- CARD -->
+      <div class="why-card reveal">
+
+        <div class="why-icon">
+          <i class="fas fa-shield-halved"></i>
+        </div>
+
+        <div class="why-text">
+          <h3>Hygienic Processing</h3>
+
+          <p>
+            Processed in sanitized environments using food-grade equipment with strict hygiene standards.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- CARD -->
+      <div class="why-card reveal">
+
+        <div class="why-icon">
+          <i class="fas fa-bolt"></i>
+        </div>
+
+        <div class="why-text">
+          <h3>Fast Delivery</h3>
+
+          <p>
+            Fresh chicken delivered quickly to your doorstep with secure packaging and maintained freshness.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- CARD -->
+      <div class="why-card reveal">
+
+        <div class="why-icon">
+          <i class="fas fa-tags"></i>
+        </div>
+
+        <div class="why-text">
+          <h3>Affordable Pricing</h3>
+
+          <p>
+            Premium quality chicken at competitive market prices for both retail and bulk customers.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- CARD -->
+      <div class="why-card reveal">
+
+        <div class="why-icon">
+          <i class="fas fa-handshake"></i>
+        </div>
+
+        <div class="why-text">
+          <h3>Trusted Service</h3>
+
+          <p>
+            Hundreds of satisfied families and restaurants trust us for consistency, quality, and reliability.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- CARD -->
+      <div class="why-card reveal">
+
+        <div class="why-icon">
+          <i class="fas fa-headset"></i>
+        </div>
+
+        <div class="why-text">
+          <h3>24/7 Customer Support</h3>
+
+          <p>
+            We're always available on WhatsApp and phone calls for orders, support, and custom requirements.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- DIVIDER -->
+<div class="divider"></div>
+
+<!-- JS -->
+<script>
+
+/* REVEAL ANIMATION */
+
+const reveals = document.querySelectorAll('.reveal');
+
+function revealOnScroll(){
+
+  reveals.forEach((el)=>{
+
+    const windowHeight = window.innerHeight;
+    const revealTop = el.getBoundingClientRect().top;
+    const revealPoint = 100;
+
+    if(revealTop < windowHeight - revealPoint){
+      el.classList.add('visible');
+    }
+
+  });
+
+}
+
+window.addEventListener('scroll', revealOnScroll);
+
+revealOnScroll();
+
+</script>
+
+</body>
+</html>
+```

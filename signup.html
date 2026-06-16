@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Create Account — DEECUTS Fresh Chicken</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,600&family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --purple:       #9b6ddb;
+      --purple2:      #461877;
+      --purple-light: #EEE5FF;
+      --purple-pale:  #F7F3FF;
+      --dark:         #0F0B15;
+      --text:         #1A1225;
+      --muted:        #6B6478;
+      --border:       #E8E0F0;
+      --green:        #2ECC71;
+      --red:          #E53E3E;
+      --gold:         #F5C842;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--dark);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: -120px; right: -120px;
+      width: 450px; height: 450px;
+      background: radial-gradient(circle, rgba(155,109,219,.35) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -100px; left: -100px;
+      width: 380px; height: 380px;
+      background: radial-gradient(circle, rgba(70,24,119,.4) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .auth-card {
+      background: #fff;
+      border-radius: 24px;
+      padding: clamp(28px, 6vw, 44px);
+      width: 100%;
+      max-width: 460px;
+      box-shadow: 0 32px 80px rgba(0,0,0,.45);
+      position: relative;
+      z-index: 1;
+      animation: slideUp .4s ease;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .auth-brand {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 24px;
+    }
+    .auth-brand-icon {
+      width: 40px; height: 40px; background: var(--purple); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; font-size: 20px;
+    }
+    .auth-brand-name {
+      font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800;
+      color: var(--purple); line-height: 1.1;
+    }
+    .auth-brand-name small {
+      display: block; font-size: 8px; color: var(--muted);
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
+      letter-spacing: 2px; text-transform: uppercase;
+    }
+
+    .auth-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(22px, 4vw, 28px); font-weight: 700;
+      color: var(--text); margin-bottom: 4px;
+    }
+    .auth-title em { color: var(--purple); font-style: normal; }
+    .auth-sub { font-size: 13px; color: var(--muted); margin-bottom: 22px; }
+
+    .form-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;
+    }
+    @media (max-width: 420px) { .form-row { grid-template-columns: 1fr; } }
+    .form-full { grid-column: 1 / -1; }
+
+    .form-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+    .form-group label {
+      font-size: 11px; font-weight: 700; color: var(--muted);
+      text-transform: uppercase; letter-spacing: .7px;
+    }
+    .input-wrap { position: relative; }
+    .input-wrap .input-icon {
+      position: absolute; left: 12px; top: 50%;
+      transform: translateY(-50%); font-size: 16px; pointer-events: none;
+    }
+    .form-group input {
+      width: 100%; padding: 12px 12px 12px 38px;
+      border: 1.5px solid var(--border); border-radius: 10px;
+      font-size: 14px; font-family: 'DM Sans', sans-serif;
+      color: var(--text); outline: none; transition: .2s; background: #fff;
+    }
+    .form-group input:focus {
+      border-color: var(--purple); box-shadow: 0 0 0 3px rgba(155,109,219,.12);
+    }
+    .form-group input.error { border-color: var(--red); }
+    .form-group input.valid { border-color: var(--green); }
+
+    .field-error { font-size: 11px; color: var(--red); margin-top: 3px; display: none; }
+    .field-error.show { display: block; }
+
+    /* Password strength bar */
+    .pw-strength {
+      height: 4px; border-radius: 2px; background: var(--border);
+      margin-top: 6px; overflow: hidden;
+    }
+    .pw-strength-bar {
+      height: 100%; width: 0%; border-radius: 2px;
+      transition: width .3s, background .3s;
+    }
+    .pw-strength-label { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+    .btn-auth {
+      width: 100%; padding: 14px; background: var(--purple); color: #fff;
+      border: none; border-radius: 10px; font-size: 15px; font-weight: 700;
+      font-family: 'Syne', sans-serif; cursor: pointer; transition: .2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin-top: 4px;
+    }
+    .btn-auth:hover:not(:disabled) {
+      background: var(--purple2); transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(91,45,142,.38);
+    }
+    .btn-auth:disabled { opacity: .65; cursor: not-allowed; transform: none; }
+
+    .auth-divider {
+      display: flex; align-items: center; gap: 12px; margin: 18px 0;
+      color: var(--muted); font-size: 12px;
+    }
+    .auth-divider::before, .auth-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+
+    .btn-google {
+      width: 100%; padding: 13px; background: #fff; color: var(--text);
+      border: 1.5px solid var(--border); border-radius: 10px;
+      font-size: 14px; font-weight: 600; font-family: 'DM Sans', sans-serif;
+      cursor: pointer; transition: .2s;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .btn-google:hover { border-color: var(--purple); background: var(--purple-pale); }
+    .google-icon { width: 18px; height: 18px; }
+
+    .auth-footer { text-align: center; margin-top: 22px; font-size: 13px; color: var(--muted); }
+    .auth-footer a { color: var(--purple); font-weight: 600; text-decoration: none; }
+    .auth-footer a:hover { text-decoration: underline; }
+
+    .auth-alert {
+      padding: 11px 14px; border-radius: 10px; font-size: 13px;
+      font-weight: 500; margin-bottom: 14px; display: none;
+    }
+    .auth-alert.show { display: block; }
+    .auth-alert.error   { background: #fef2f2; color: #c53030; border: 1px solid #fed7d7; }
+    .auth-alert.success { background: #f0fff4; color: #276749; border: 1px solid #c6f6d5; }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px; font-size: 12px;
+      color: var(--muted); text-decoration: none; margin-bottom: 20px; transition: color .2s;
+    }
+    .back-link:hover { color: var(--purple); }
+
+    .pw-toggle {
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer; font-size: 16px;
+      color: var(--muted); padding: 0; line-height: 1;
+    }
+
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,.4); border-top-color: #fff;
+      border-radius: 50%; animation: spin .6s linear infinite; display: none;
+    }
+    .spinner.show { display: block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Terms checkbox */
+    .terms-row {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 12px; color: var(--muted); margin-bottom: 16px; line-height: 1.5;
+    }
+    .terms-row input[type="checkbox"] {
+      accent-color: var(--purple); width: 16px; height: 16px;
+      margin-top: 1px; flex-shrink: 0; cursor: pointer;
+    }
+    .terms-row a { color: var(--purple); }
+
+    /* Benefits strip */
+    .benefits {
+      background: var(--purple-pale); border-radius: 12px;
+      padding: 12px 16px; margin-bottom: 20px;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .benefit-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+    .benefit-item span { font-size: 14px; }
+  </style>
+</head>
+<body>
+
+  <div class="auth-card">
+    <a href="index.html" class="back-link">← Back to Store</a>
+
+    <!-- Brand -->
+    <div class="auth-brand">
+      <div class="auth-brand-icon">🍗</div>
+      <div class="auth-brand-name">DEECUTS<small>Farm Fresh Poultry</small></div>
+    </div>
+
+    <div class="auth-title">Create <em>Account</em></div>
+    <div class="auth-sub">Join thousands of happy Deecuts customers</div>
+
+    <!-- Benefits strip -->
+    <div class="benefits">
+      <div class="benefit-item"><span>✅</span> Track all your orders in one place</div>
+      <div class="benefit-item"><span>🎁</span> Exclusive member deals & early access</div>
+      <div class="benefit-item"><span>🚀</span> Faster checkout every time</div>
+    </div>
+
+    <!-- Alert banner -->
+    <div class="auth-alert" id="signup-alert"></div>
+
+    <!-- Name row -->
+    <div class="form-row">
+      <div class="form-group" style="margin-bottom:0">
+        <label>First Name</label>
+        <div class="input-wrap">
+          <span class="input-icon">👤</span>
+          <input type="text" id="su-fname" placeholder="EnterName" autocomplete="given-name">
+        </div>
+        <div class="field-error" id="su-fname-err">First name required.</div>
+      </div>
+      <div class="form-group" style="margin-bottom:0">
+        <label>Last Name</label>
+        <div class="input-wrap">
+          <span class="input-icon">👤</span>
+          <input type="text" id="su-lname" placeholder="EnterName" autocomplete="family-name">
+        </div>
+        <div class="field-error" id="su-lname-err">Last name required.</div>
+      </div>
+    </div>
+
+    <!-- Phone -->
+    <div class="form-group">
+      <label>Phone Number</label>
+      <div class="input-wrap">
+        <span class="input-icon">📱</span>
+        <input type="tel" id="su-phone" placeholder="+91 9876543210" autocomplete="tel">
+      </div>
+      <div class="field-error" id="su-phone-err">Enter a valid 10-digit number.</div>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+      <label>Email Address</label>
+      <div class="input-wrap">
+        <span class="input-icon">✉️</span>
+        <input type="email" id="su-email" placeholder="you@email.com" autocomplete="email">
+      </div>
+      <div class="field-error" id="su-email-err">Enter a valid email.</div>
+    </div>
+
+    <!-- Password -->
+    <div class="form-group">
+      <label>Password</label>
+      <div class="input-wrap">
+        <span class="input-icon">🔒</span>
+        <input type="password" id="su-pw" placeholder="Min. 6 characters"
+               autocomplete="new-password" oninput="checkStrength(this.value)">
+        <button class="pw-toggle" type="button" onclick="togglePw('su-pw', this)">👁</button>
+      </div>
+      <div class="pw-strength"><div class="pw-strength-bar" id="pw-bar"></div></div>
+      <div class="pw-strength-label" id="pw-label"></div>
+      <div class="field-error" id="su-pw-err">Password must be at least 6 characters.</div>
+    </div>
+
+    <!-- Confirm Password -->
+    <div class="form-group">
+      <label>Confirm Password</label>
+      <div class="input-wrap">
+        <span class="input-icon">🔒</span>
+        <input type="password" id="su-pw2" placeholder="Repeat password" autocomplete="new-password">
+        <button class="pw-toggle" type="button" onclick="togglePw('su-pw2', this)">👁</button>
+      </div>
+      <div class="field-error" id="su-pw2-err">Passwords do not match.</div>
+    </div>
+
+    <!-- Terms -->
+    <div class="terms-row">
+      <input type="checkbox" id="su-terms">
+      <label for="su-terms">
+        I agree to Deecuts's <a href="#">Terms of Service</a> and
+        <a href="#">Privacy Policy</a>. I consent to receiving order updates.
+      </label>
+    </div>
+    <div class="field-error" id="su-terms-err">Please accept the terms to continue.</div>
+
+    <!-- Submit -->
+    <button class="btn-auth" id="signup-btn" onclick="signUpWithEmail()">
+      <span id="signup-btn-text">Create My Account →</span>
+      <div class="spinner" id="signup-spinner"></div>
+    </button>
+
+    <!-- Divider -->
+    <div class="auth-divider">or sign up with</div>
+
+    <!-- Google -->
+    <button class="btn-google" id="google-btn" onclick="signUpWithGoogle()">
+      <svg class="google-icon" viewBox="0 0 48 48">
+        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        <path fill="none" d="M0 0h48v48H0z"/>
+      </svg>
+      Sign up with Google
+    </button>
+
+    <div class="auth-footer">
+      Already have an account? <a href="login.html">Sign In →</a>
+    </div>
+  </div>
+
+  <!-- Firebase v8 compat CDN -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+  <script>
+    /* ════════════════════════════════════════
+       DEECUTS  |  signup.html  —  Inline Script
+    ════════════════════════════════════════ */
+
+  const firebaseConfig = {
+  apiKey: "AIzaSyAQTwmcPDy73S_qqYEJe3eUoUyiefDRs0A",
+  authDomain: "devaro-fresh-chicken.firebaseapp.com",
+  databaseURL: "https://devaro-fresh-chicken-default-rtdb.firebaseio.com",
+  projectId: "devaro-fresh-chicken",
+  storageBucket: "devaro-fresh-chicken.firebasestorage.app",
+  messagingSenderId: "1009194311324",
+  appId: "1:1009194311324:web:de48f064b87ab583375759",
+  measurementId: "G-5FVZQ712V2"
+};
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const googleProvider = new firebase.auth.GoogleAuthProvider();
+    googleProvider.setCustomParameters({ prompt: "select_account" });
+
+    // If already signed in → redirect
+    auth.onAuthStateChanged(function (user) {
+      if (user) window.location.href = "index.html";
+    });
+
+    /* ── Helpers ── */
+    function showAlert(id, msg, type) {
+      const el = document.getElementById(id);
+      el.textContent = msg; el.className = `auth-alert ${type} show`;
+    }
+    function hideAlert(id) { document.getElementById(id).classList.remove("show"); }
+
+    function setLoading(loading) {
+      const btn  = document.getElementById("signup-btn");
+      const spin = document.getElementById("signup-spinner");
+      const txt  = document.getElementById("signup-btn-text");
+      btn.disabled = loading;
+      spin.classList.toggle("show", loading);
+      if (!loading) txt.textContent = "Create My Account →";
+    }
+
+    function togglePw(inputId, btn) {
+      const inp = document.getElementById(inputId);
+      if (inp.type === "password") { inp.type = "text";     btn.textContent = "🙈"; }
+      else                         { inp.type = "password"; btn.textContent = "👁"; }
+    }
+
+    /* ── Password strength ── */
+    function checkStrength(pw) {
+      const bar   = document.getElementById("pw-bar");
+      const label = document.getElementById("pw-label");
+      let score = 0;
+      if (pw.length >= 6)                    score++;
+      if (pw.length >= 10)                   score++;
+      if (/[A-Z]/.test(pw))                  score++;
+      if (/[0-9]/.test(pw))                  score++;
+      if (/[^A-Za-z0-9]/.test(pw))           score++;
+
+      const levels = [
+        { pct:"0%",   color:"transparent", text:"" },
+        { pct:"25%",  color:"#E53E3E",     text:"Weak" },
+        { pct:"50%",  color:"#F5C842",     text:"Fair" },
+        { pct:"75%",  color:"#3182ce",     text:"Good" },
+        { pct:"100%", color:"#2ECC71",     text:"Strong ✅" },
+      ];
+      const lvl = levels[Math.min(score, 4)];
+      bar.style.width      = lvl.pct;
+      bar.style.background = lvl.color;
+      label.textContent    = lvl.text;
+      label.style.color    = lvl.color;
+    }
+
+    /* ── Validation ── */
+    function val(inputId, errId, test, msg) {
+      const v  = document.getElementById(inputId).value.trim();
+      const el = document.getElementById(errId);
+      const ok = test(v);
+      el.textContent = msg;
+      el.classList.toggle("show", !ok);
+      return ok;
+    }
+
+    /* ── Friendly errors ── */
+    function friendlyError(code) {
+      const map = {
+        "auth/email-already-in-use":   "An account with this email already exists.",
+        "auth/invalid-email":          "Please enter a valid email address.",
+        "auth/weak-password":          "Password is too weak. Use at least 6 characters.",
+        "auth/network-request-failed": "Network error. Check your connection.",
+        "auth/popup-closed-by-user":   "Google sign-up was cancelled.",
+        "auth/popup-blocked":          "Pop-up was blocked. Allow pop-ups for this site.",
+      };
+      return map[code] || "An error occurred. Please try again.";
+    }
+
+    /* ════════════ EMAIL SIGN-UP ════════════ */
+    function signUpWithEmail() {
+      hideAlert("signup-alert");
+
+      // Validate all fields
+      const fnOk    = val("su-fname", "su-fname-err",  v => v.length > 0,                      "First name required.");
+      const lnOk    = val("su-lname", "su-lname-err",  v => v.length > 0,                      "Last name required.");
+      const phOk    = val("su-phone", "su-phone-err",  v => /^[6-9]\d{9}$/.test(v.replace(/\D/g,"")), "Enter valid 10-digit number.");
+      const emOk    = val("su-email", "su-email-err",  v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), "Enter a valid email.");
+      const pw      = document.getElementById("su-pw").value;
+      const pw2     = document.getElementById("su-pw2").value;
+      const pwOk    = val("su-pw",    "su-pw-err",     () => pw.length >= 6,                   "Password must be at least 6 characters.");
+      const pw2Ok   = (() => {
+        const el = document.getElementById("su-pw2-err");
+        const ok = pw === pw2 && pw2.length > 0;
+        el.classList.toggle("show", !ok);
+        return ok;
+      })();
+      const terms   = document.getElementById("su-terms").checked;
+      const termsEl = document.getElementById("su-terms-err");
+      termsEl.classList.toggle("show", !terms);
+
+      if (!fnOk || !lnOk || !phOk || !emOk || !pwOk || !pw2Ok || !terms) return;
+
+      const displayName = document.getElementById("su-fname").value.trim() + " " +
+                          document.getElementById("su-lname").value.trim();
+      const email       = document.getElementById("su-email").value.trim();
+
+      setLoading(true);
+
+      auth.createUserWithEmailAndPassword(email, pw)
+        .then(function (cred) {
+          // Update display name
+          return cred.user.updateProfile({ displayName: displayName });
+        })
+        .then(function () {
+          console.log("✅ Account created");
+          // Redirect — onAuthStateChanged will fire and redirect
+          window.location.href = "index.html";
+        })
+        .catch(function (error) {
+          console.error("Signup error:", error.code);
+          setLoading(false);
+          showAlert("signup-alert", friendlyError(error.code), "error");
+        });
+    }
+
+    /* ════════════ GOOGLE SIGN-UP ════════════ */
+    function signUpWithGoogle() {
+      hideAlert("signup-alert");
+      const btn = document.getElementById("google-btn");
+      btn.disabled     = true;
+      btn.textContent  = "Connecting…";
+
+      auth.signInWithPopup(googleProvider)
+        .then(function () {
+          window.location.href = "index.html";
+        })
+        .catch(function (error) {
+          btn.disabled     = false;
+          btn.innerHTML    = `
+            <svg class="google-icon" viewBox="0 0 48 48">
+              <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+              <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+              <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+              <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+            </svg>
+            Sign up with Google`;
+          showAlert("signup-alert", friendlyError(error.code), "error");
+        });
+    }
+
+    /* ── Enter key submit ── */
+    document.addEventListener("keydown", e => { if (e.key === "Enter") signUpWithEmail(); });
+
+    window.signUpWithEmail  = signUpWithEmail;
+    window.signUpWithGoogle = signUpWithGoogle;
+    window.togglePw         = togglePw;
+    window.checkStrength    = checkStrength;
+  </script>
+</body>
+</html>
